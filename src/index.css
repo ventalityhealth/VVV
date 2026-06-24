@@ -1,0 +1,118 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------ */
+/*  Base                                                               */
+/* ------------------------------------------------------------------ */
+html,
+body {
+  background: #0b1a0b;
+  color: #f5f0e6;
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Scrollbar — minimal, forest-themed */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0b1a0b;
+}
+::-webkit-scrollbar-thumb {
+  background: #4a7c59;
+  border-radius: 3px;
+}
+
+::selection {
+  background: rgba(201, 169, 110, 0.3);
+  color: #f5f0e6;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Glassmorphism Variant: "Forest Glass"                             */
+/* ------------------------------------------------------------------ */
+@layer components {
+  .forest-glass {
+    background: rgba(74, 124, 89, 0.08);
+    background-blend-mode: luminosity;
+    backdrop-filter: blur(12px) saturate(1.2);
+    -webkit-backdrop-filter: blur(12px) saturate(1.2);
+    border: 1px solid rgba(201, 169, 110, 0.15);
+    box-shadow:
+      inset 0 1px 1px rgba(245, 240, 230, 0.08),
+      0 8px 32px rgba(11, 26, 11, 0.4);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .forest-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: linear-gradient(
+      180deg,
+      rgba(201, 169, 110, 0.5) 0%,
+      rgba(201, 169, 110, 0.2) 25%,
+      rgba(74, 124, 89, 0.1) 50%,
+      rgba(74, 124, 89, 0.05) 75%,
+      rgba(201, 169, 110, 0.3) 100%
+    );
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .forest-glass-strong {
+    background: rgba(74, 124, 89, 0.12);
+    backdrop-filter: blur(50px) saturate(1.4);
+    -webkit-backdrop-filter: blur(50px) saturate(1.4);
+    border: 1px solid rgba(201, 169, 110, 0.25);
+    box-shadow:
+      4px 4px 4px rgba(0, 0, 0, 0.05),
+      inset 0 1px 1px rgba(245, 240, 230, 0.15),
+      0 0 60px rgba(74, 124, 89, 0.15);
+    position: relative;
+    overflow: hidden;
+  }
+}
+
+/* Underline-grow animation for nav links */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  height: 1px;
+  width: 0;
+  background: #c9a96e;
+  transition: width 0.3s ease;
+}
+.nav-link:hover::after {
+  width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
