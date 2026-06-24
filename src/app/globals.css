@@ -2,37 +2,48 @@
 
 /* ─────────────────────────────────────────────
    Design tokens — Tailwind v4 @theme block
+
+   Direction: modern premium minimalism with natural roots.
+   The base is a clean, near-neutral editorial dark. Green (moss) and
+   gold are reserved as ACCENTS — provenance cues, not the whole theme.
    ───────────────────────────────────────────── */
 @theme {
-  /* Colors */
-  --color-forest-950: #050d05;
-  --color-forest-900: #0b1a0b;
-  --color-forest-800: #142614;
-  --color-forest-700: #1e331e;
-  --color-forest-600: #2d4a2d;
+  /* Neutral ink base — the editorial canvas.
+     Faint cool-green undertone keeps a natural root without going "forest". */
+  --color-forest-950: #070908;  /* deepest */
+  --color-forest-900: #0c0f0e;  /* page background */
+  --color-forest-800: #141715;  /* panels */
+  --color-forest-700: #1c201e;  /* raised surfaces */
+  --color-forest-600: #2a302d;  /* hairlines / dividers */
+
+  /* Moss — the green accent (provenance, never the field) */
   --color-forest-500: #4a7c59;
   --color-forest-400: #6b9e7c;
   --color-forest-300: #8fbc9f;
+
+  /* Gold — the premium accent */
   --color-amber-gold:  #c9a96e;
   --color-amber-light: #e8d5b5;
   --color-amber-dark:  #8b7355;
-  --color-cream:  #f5f0e6;
-  --color-bark:   #1c1410;
+
+  /* Paper / warm dark */
+  --color-cream:  #f3efe7;
+  --color-bark:   #14120f;
 
   /* Typography */
   --font-heading: "Playfair Display", Georgia, serif;
   --font-body:    "DM Sans", system-ui, sans-serif;
   --font-accent:  "Cinzel", Georgia, serif;
 
-  /* Animations */
-  --animate-float:      float 6s ease-in-out infinite;
-  --animate-glow-pulse: glow-pulse 4s ease-in-out infinite;
-  --animate-spore:      spore-drift 20s linear infinite;
-  --animate-ping-slow:  ping-slow 2s cubic-bezier(0,0,0.2,1) infinite;
+  /* Animations (kept restrained) */
+  --animate-float:      float 7s ease-in-out infinite;
+  --animate-glow-pulse: glow-pulse 6s ease-in-out infinite;
+  --animate-spore:      spore-drift 22s linear infinite;
+  --animate-ping-slow:  ping-slow 2.4s cubic-bezier(0,0,0.2,1) infinite;
 
-  /* Shadows */
-  --shadow-glass:  inset 0 1px 1px rgba(245,240,230,0.08), 0 8px 32px rgba(11,26,11,0.4);
-  --shadow-glass-strong: 4px 4px 4px rgba(0,0,0,0.05), inset 0 1px 1px rgba(245,240,230,0.15), 0 0 60px rgba(74,124,89,0.15);
+  /* Shadows — soft depth, no colored glow */
+  --shadow-soft:   0 12px 40px -16px rgba(0,0,0,0.55);
+  --shadow-raised: 0 24px 60px -24px rgba(0,0,0,0.7);
 }
 
 /* Wire next/font loaded CSS vars into design tokens.
@@ -41,6 +52,9 @@
   --font-heading: var(--font-playfair, "Playfair Display", Georgia, serif);
   --font-body:    var(--font-dm-sans,  "DM Sans", system-ui, sans-serif);
   --font-accent:  var(--font-cinzel,   "Cinzel", Georgia, serif);
+
+  /* Hairline color reused by utilities */
+  --line: rgba(243, 239, 231, 0.10);
 }
 
 /* ─────────────────────────────────────────────
@@ -48,16 +62,16 @@
    ───────────────────────────────────────────── */
 @keyframes float {
   0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-18px); }
+  50%       { transform: translateY(-10px); }
 }
 @keyframes glow-pulse {
-  0%, 100% { opacity: 0.4; filter: blur(40px); }
-  50%       { opacity: 0.85; filter: blur(60px); }
+  0%, 100% { opacity: 0.25; }
+  50%       { opacity: 0.5; }
 }
 @keyframes spore-drift {
   0%        { transform: translate(0, 0) scale(1);                        opacity: 0; }
-  10%       { opacity: 1; }
-  90%       { opacity: 1; }
+  12%       { opacity: 1; }
+  88%       { opacity: 1; }
   100%      { transform: translate(var(--drift-x, 0px), -100vh) scale(0.5); opacity: 0; }
 }
 @keyframes ping-slow {
@@ -73,64 +87,83 @@ html {
   font-family: var(--font-body);
   overflow-x: hidden;
   scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
 
-::selection { background: rgba(201,169,110,0.3); color: var(--color-cream); }
+::selection { background: rgba(201,169,110,0.25); color: var(--color-cream); }
 
 /* Scrollbar */
 ::-webkit-scrollbar       { width: 5px; }
-::-webkit-scrollbar-track { background: var(--color-forest-900); }
-::-webkit-scrollbar-thumb { background: var(--color-forest-500); border-radius: 3px; }
+::-webkit-scrollbar-track { background: var(--color-forest-950); }
+::-webkit-scrollbar-thumb { background: var(--color-forest-600); border-radius: 3px; }
 
 /* ─────────────────────────────────────────────
-   Forest Glass design system
+   Surfaces & components — clean editorial glass
+   (class names kept as .forest-glass for continuity, restyled neutral)
    ───────────────────────────────────────────── */
 @layer components {
+  /* Quiet hairline surface — the default card */
   .forest-glass {
-    background: rgba(74,124,89,0.08);
-    backdrop-filter: blur(12px) saturate(1.2);
-    -webkit-backdrop-filter: blur(12px) saturate(1.2);
-    border: 1px solid rgba(201,169,110,0.15);
-    box-shadow: var(--shadow-glass);
-    position: relative;
-    overflow: hidden;
-  }
-  .forest-glass::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1.5px;
-    background: linear-gradient(
-      180deg,
-      rgba(201,169,110,0.45) 0%,
-      rgba(201,169,110,0.18) 25%,
-      rgba(74,124,89,0.08)   50%,
-      rgba(74,124,89,0.04)   75%,
-      rgba(201,169,110,0.25) 100%
-    );
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
+    background: rgba(243, 239, 231, 0.025);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-soft);
   }
 
+  /* Slightly more present surface — large panels, drawers */
   .forest-glass-strong {
-    background: rgba(74,124,89,0.12);
-    backdrop-filter: blur(50px) saturate(1.4);
-    -webkit-backdrop-filter: blur(50px) saturate(1.4);
-    border: 1px solid rgba(201,169,110,0.25);
-    box-shadow: var(--shadow-glass-strong);
-    position: relative;
-    overflow: hidden;
+    background: rgba(243, 239, 231, 0.05);
+    backdrop-filter: blur(18px) saturate(1.1);
+    -webkit-backdrop-filter: blur(18px) saturate(1.1);
+    border: 1px solid rgba(243, 239, 231, 0.14);
+    box-shadow: var(--shadow-raised);
+  }
+
+  /* Premium primary button — solid paper on ink, high contrast */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--color-cream);
+    color: var(--color-forest-950);
+    font-weight: 500;
+    border: 1px solid transparent;
+    transition: background 0.25s ease, transform 0.2s ease;
+  }
+  .btn-primary:hover { background: #fffdf8; }
+
+  /* Secondary button — ghost with hairline */
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: transparent;
+    color: var(--color-cream);
+    border: 1px solid rgba(243, 239, 231, 0.18);
+    transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease;
+  }
+  .btn-secondary:hover {
+    border-color: rgba(201,169,110,0.6);
+    color: var(--color-amber-gold);
+    background: rgba(243, 239, 231, 0.02);
+  }
+
+  /* Editorial eyebrow label */
+  .eyebrow {
+    font-family: var(--font-body);
+    text-transform: uppercase;
+    letter-spacing: 0.24em;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: rgba(201, 169, 110, 0.85);
   }
 
   /* Nav underline-grow */
-  .nav-link {
-    position: relative;
-  }
+  .nav-link { position: relative; }
   .nav-link::after {
     content: '';
     position: absolute;
@@ -142,6 +175,9 @@ html {
     transition: width 0.28s ease;
   }
   .nav-link:hover::after { width: 100%; }
+
+  /* Thin rule used to separate editorial blocks */
+  .hairline { border-color: var(--line); }
 }
 
 /* ─────────────────────────────────────────────
