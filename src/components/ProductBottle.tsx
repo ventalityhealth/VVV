@@ -20,10 +20,10 @@ export function ProductBottle({ name, category, accentColor, className = "" }: P
       role="img"
     >
       <defs>
-        <radialGradient id={`bg-${id}`} cx="50%" cy="25%" r="75%">
-          <stop offset="0%"   stopColor="#1E331E" />
-          <stop offset="60%"  stopColor="#142614" />
-          <stop offset="100%" stopColor="#0B1A0B" />
+        <radialGradient id={`bg-${id}`} cx="50%" cy="22%" r="78%">
+          <stop offset="0%"   stopColor="#161a18" />
+          <stop offset="60%"  stopColor="#0f1211" />
+          <stop offset="100%" stopColor="#070908" />
         </radialGradient>
         <linearGradient id={`bottle-${id}`} x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%"   stopColor={accentColor} stopOpacity="0.9" />
@@ -80,7 +80,7 @@ export function ProductBottle({ name, category, accentColor, className = "" }: P
       <line x1="116" y1="218" x2="184" y2="218"
         stroke={accentColor} strokeOpacity="0.4" strokeWidth="0.8" />
 
-      {/* Product name */}
+      {/* Product name — first word */}
       <text x="150" y="238" fontFamily="Georgia, serif" fontStyle="italic"
         fontSize="11.5" fill="#F5F0E6" textAnchor="middle" opacity="0.9">
         {name.split(" ").slice(0, 2).join(" ")}

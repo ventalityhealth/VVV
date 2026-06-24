@@ -1,7 +1,6 @@
 "use client";
 // Footer — "The Soil"
-// Motion for React: layout animation for newsletter state.
-// GSAP: stagger all footer items in on scroll.
+// Motion for React: stagger links in on scroll; layout animation for newsletter state.
 import { useRef, useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { gsap } from "@/lib/gsap";
@@ -39,13 +38,13 @@ export function Footer() {
           {/* Brand + newsletter */}
           <div>
             <div className="flex items-center gap-3">
-              <span className="forest-glass flex h-12 w-12 items-center justify-center rounded-full">
-                <span className="font-heading italic text-2xl text-cream">V</span>
+              <span className="forest-glass flex h-11 w-11 items-center justify-center rounded-full">
+                <span className="font-heading text-xl text-cream">V</span>
               </span>
-              <span className="font-heading italic text-2xl text-cream">Ventality</span>
+              <span className="font-heading text-2xl text-cream">Ventality</span>
             </div>
-            <p className="mt-4 font-accent text-xs uppercase tracking-[0.22em] text-amber-gold/65">
-              Where the forest meets the formula.
+            <p className="eyebrow mt-5">
+              Where the forest meets the formula
             </p>
 
             {/* Newsletter */}
@@ -57,7 +56,7 @@ export function Footer() {
                   animate={{ opacity: 1, y: 0 }}
                   className="text-sm text-amber-gold"
                 >
-                  You&apos;re in the forest now. ✶
+                  You&apos;re in the forest now. ✦
                 </motion.p>
               ) : (
                 <form
@@ -72,9 +71,9 @@ export function Footer() {
                   />
                   <button
                     type="submit"
-                    className="forest-glass-strong inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium text-cream hover:text-amber-gold transition-colors"
+                    className="btn-primary whitespace-nowrap rounded-full px-4 py-2 text-sm"
                   >
-                    Grow with us
+                    Subscribe
                     <ArrowRight className="h-4 w-4" />
                   </button>
                 </form>

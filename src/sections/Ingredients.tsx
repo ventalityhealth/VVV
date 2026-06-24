@@ -103,13 +103,13 @@ export function Ingredients() {
       ref={sectionRef}
       className="relative min-h-screen overflow-hidden bg-bark px-6 py-28 md:px-14 lg:px-24"
     >
-      {/* Ambient light */}
+      {/* Ambient light — faint accent */}
       <div aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-30"
+        className="pointer-events-none absolute inset-0 opacity-50"
         style={{
           background:
-            "radial-gradient(ellipse at 20% 50%, rgba(74,124,89,0.25) 0%, transparent 55%), " +
-            "radial-gradient(ellipse at 80% 20%, rgba(201,169,110,0.15) 0%, transparent 45%)",
+            "radial-gradient(ellipse at 18% 50%, rgba(74,124,89,0.10) 0%, transparent 50%), " +
+            "radial-gradient(ellipse at 82% 18%, rgba(201,169,110,0.08) 0%, transparent 45%)",
         }}
       />
 
@@ -122,9 +122,9 @@ export function Ingredients() {
             className="absolute inset-[-15%] will-change-transform"
             style={{
               background:
-                "radial-gradient(circle at 30% 30%, #2D4A2D, transparent 55%), " +
-                "radial-gradient(circle at 70% 70%, #4A7C59, transparent 50%), " +
-                "linear-gradient(160deg, #1C1410, #0B1A0B)",
+                "radial-gradient(circle at 30% 25%, rgba(74,124,89,0.30), transparent 55%), " +
+                "radial-gradient(circle at 75% 78%, rgba(45,74,45,0.40), transparent 55%), " +
+                "linear-gradient(160deg, #141715, #0a0c0b)",
             }}
           />
           {/* Leaf-layers SVG composition */}
@@ -134,6 +134,7 @@ export function Ingredients() {
             aria-hidden="true"
           >
             <ellipse cx="200" cy="250" rx="160" ry="200" fill="#4A7C59" opacity="0.2" />
+            {/* stylized leaf shapes */}
             {[
               { x1: 120, y1: 80,  x2: 200, y2: 300, x3: 280, y3: 80  },
               { x1: 60,  y1: 200, x2: 200, y2: 380, x3: 340, y3: 200 },
@@ -148,6 +149,7 @@ export function Ingredients() {
                 opacity={0.4 - i * 0.08}
               />
             ))}
+            {/* dew drops */}
             {[
               [170, 140], [230, 190], [145, 260], [255, 310], [190, 380],
             ].map(([cx, cy]) => (
@@ -161,11 +163,11 @@ export function Ingredients() {
 
         {/* ── Content ── */}
         <div ref={contentRef} className="will-change-transform">
-          <p className="mb-4 text-sm font-body text-amber-gold/75 tracking-wide">// The Roots</p>
-          <h2 className="font-heading italic text-4xl leading-[0.95] tracking-[-2px] text-cream md:text-5xl">
+          <p className="eyebrow mb-5">The Roots · Provenance</p>
+          <h2 className="font-heading text-4xl leading-[1.04] tracking-[-0.02em] text-cream md:text-5xl">
             From forest floor to capsule.
           </h2>
-          <p className="mt-5 max-w-md text-cream/55 leading-relaxed">
+          <p className="mt-6 max-w-md text-cream/55 leading-relaxed">
             We don&apos;t hide behind proprietary blends. Every ingredient in Ventality is
             traceable to Supliful&apos;s verified suppliers — photographed, documented, and
             third-party tested.
@@ -195,7 +197,7 @@ export function Ingredients() {
                         aria-hidden="true"
                       />
                       <span className="flex-1 min-w-0">
-                        <span className="block font-heading italic text-lg text-cream truncate">{ing.name}</span>
+                        <span className="block font-heading text-lg text-cream truncate">{ing.name}</span>
                         <span className="block text-xs text-amber-gold/75 mt-0.5">{ing.claim}</span>
                       </span>
                       <motion.span

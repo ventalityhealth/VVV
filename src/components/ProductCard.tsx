@@ -24,41 +24,38 @@ export function ProductCard({
       whileHover="hover"
       animate="rest"
       variants={cardHover}
-      className="forest-glass rounded-[1.5rem] overflow-hidden cursor-pointer group"
+      className="forest-glass group cursor-pointer overflow-hidden rounded-2xl"
     >
       {/* Product visual */}
-      <div className="relative h-[280px] overflow-hidden flex items-center justify-center bg-forest-800/40">
-        {/* Ambient glow behind bottle */}
+      <div className="relative flex h-[300px] items-center justify-center overflow-hidden bg-forest-950">
+        {/* faint accent wash behind bottle */}
         <div
-          className="absolute inset-0 opacity-20"
+          className="absolute inset-0 opacity-[0.12]"
           style={{
-            background: `radial-gradient(circle at 50% 60%, ${accentColor}55, transparent 65%)`,
+            background: `radial-gradient(circle at 50% 62%, ${accentColor}, transparent 60%)`,
           }}
         />
         <ProductBottle
           name={name}
           category={category}
           accentColor={accentColor}
-          className="relative z-10 h-[85%] w-auto drop-shadow-2xl transition-transform duration-500 group-hover:scale-[1.04]"
+          className="relative z-10 h-[84%] w-auto transition-transform duration-500 group-hover:scale-[1.03]"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-forest-900/50 to-transparent" />
       </div>
 
       {/* Card content */}
-      <div className="p-6">
-        <span className="forest-glass inline-block rounded-full px-3 py-1 text-[11px] text-amber-gold font-body">
-          {category}
-        </span>
-        <h3 className="font-heading italic text-2xl text-cream mt-3 leading-tight">{name}</h3>
-        <p className="text-sm text-cream/55 mt-1 leading-snug">{ingredients.join(", ")}</p>
-        <div className="flex items-center justify-between mt-5">
-          <span className="text-amber-gold font-body font-semibold text-lg">{price}</span>
+      <div className="border-t border-[color:var(--line)] p-6">
+        <span className="eyebrow text-[0.62rem]">{category}</span>
+        <h3 className="mt-3 font-heading text-xl leading-tight text-cream">{name}</h3>
+        <p className="mt-2 text-sm leading-snug text-cream/45">{ingredients.join(" · ")}</p>
+        <div className="mt-6 flex items-center justify-between">
+          <span className="font-heading text-lg text-cream">{price}</span>
           <motion.button
             variants={buttonTap}
             whileTap="tap"
-            className="inline-flex items-center gap-1.5 text-cream text-sm underline underline-offset-4 hover:text-amber-gold transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm text-cream/80 transition-colors hover:text-amber-gold"
           >
-            Add to Ritual
+            Add to cart
             <ArrowUpRight className="h-4 w-4" />
           </motion.button>
         </div>

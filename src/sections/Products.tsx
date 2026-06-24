@@ -52,40 +52,30 @@ export function Products() {
     <section
       id="the-grove"
       ref={sectionRef}
-      className="relative min-h-screen bg-forest-900 px-6 py-28 md:px-14 lg:px-24"
+      className="relative bg-forest-900 px-6 py-32 md:px-14 lg:px-24"
     >
-      {/* Subtle bark texture */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.04]"
-        style={{
-          backgroundImage:
-            "repeating-linear-gradient(90deg, #1C1410 0px, #1C1410 1.5px, transparent 1.5px, transparent 10px)",
-        }}
-      />
-
-      {/* Growing branch — left edge */}
+      {/* Growing branch — left edge, faint accent */}
       <BranchSVG
-        className="absolute left-0 top-0 h-full w-24 opacity-60"
+        className="pointer-events-none absolute left-0 top-0 h-full w-20 opacity-25"
         scrollStart="top 85%"
         scrollEnd="bottom 20%"
       />
 
       <div className="relative mx-auto max-w-7xl">
         {/* Header */}
-        <div ref={headerRef} className="will-change-transform">
-          <p className="text-sm font-body text-amber-gold/75 mb-4 tracking-wide">// The Grove</p>
-          <h2 className="font-heading italic text-5xl leading-[0.9] tracking-[-2px] text-cream md:text-6xl lg:text-[5rem]">
+        <div ref={headerRef} className="max-w-2xl will-change-transform">
+          <p className="eyebrow mb-5">The Grove · Catalog</p>
+          <h2 className="font-heading text-4xl leading-[1.04] tracking-[-0.02em] text-cream md:text-5xl lg:text-[3.75rem]">
             Harvested for you.
           </h2>
-          <p className="mt-5 max-w-lg text-cream/55 leading-relaxed">
-            Every formula is sourced from Supliful&apos;s verified catalog and bottled under your
-            forest brand.
+          <p className="mt-6 max-w-md text-cream/55 leading-relaxed">
+            Every formula is sourced from Supliful&apos;s verified catalog and bottled under the
+            Ventality name — full provenance, no proprietary blends.
           </p>
         </div>
 
         {/* Product grid */}
-        <div ref={gridRef} className="mt-16 grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3">
+        <div ref={gridRef} className="mt-20 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {products.map((p) => (
             <ProductCard
               key={p.id}

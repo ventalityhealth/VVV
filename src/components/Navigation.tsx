@@ -43,10 +43,10 @@ export function Navigation() {
       >
         {/* Brand mark */}
         <a href="#hero" className="flex items-center gap-3 group" aria-label="Ventality home">
-          <span className="forest-glass h-11 w-11 rounded-full flex items-center justify-center ring-1 ring-amber-gold/20 group-hover:ring-amber-gold/50 transition-all duration-300">
-            <span className="font-heading italic text-xl text-cream">V</span>
+          <span className="forest-glass flex h-10 w-10 items-center justify-center rounded-full ring-1 ring-amber-gold/20 transition-all duration-300 group-hover:ring-amber-gold/50">
+            <span className="font-heading text-lg text-cream">V</span>
           </span>
-          <span className="hidden sm:block font-heading italic text-xl text-cream/90">Ventality</span>
+          <span className="hidden text-base font-medium tracking-wide text-cream/90 sm:block">Ventality</span>
         </a>
 
         {/* Center pill — desktop */}
@@ -67,9 +67,9 @@ export function Navigation() {
           href="#the-grove"
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          className="hidden md:inline-flex forest-glass-strong rounded-full px-5 py-2.5 items-center gap-2 text-sm font-medium text-cream hover:text-amber-gold transition-colors"
+          className="btn-primary hidden rounded-full px-5 py-2.5 text-sm md:inline-flex"
         >
-          Enter the Forest
+          Shop
           <ArrowUpRight className="h-4 w-4" />
         </motion.a>
 
@@ -118,7 +118,7 @@ export function Navigation() {
                     key={link}
                     href={`#${link.toLowerCase().replace(/\s+/g, "-")}`}
                     onClick={() => setOpen(false)}
-                    className="font-heading italic text-2xl text-cream hover:text-amber-gold transition-colors"
+                    className="font-heading text-2xl text-cream transition-colors hover:text-amber-gold"
                   >
                     {link}
                   </a>
@@ -127,9 +127,9 @@ export function Navigation() {
               <a
                 href="#the-grove"
                 onClick={() => setOpen(false)}
-                className="forest-glass-strong mt-auto rounded-full px-5 py-3 flex items-center justify-center gap-2 text-sm font-medium text-cream"
+                className="btn-primary mt-auto justify-center rounded-full px-5 py-3 text-sm"
               >
-                Enter the Forest
+                Shop the collection
                 <ArrowUpRight className="h-4 w-4" />
               </a>
             </motion.div>

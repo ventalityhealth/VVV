@@ -11,11 +11,11 @@ export function Spores({ count = 20, className = "" }: SporesProps) {
     () =>
       Array.from({ length: count }, () => ({
         left:     Math.random() * 100,
-        size:     2 + Math.random() * 4,
-        driftX:   (Math.random() - 0.5) * 180,
-        duration: 14 + Math.random() * 12,
-        delay:    Math.random() * 22,
-        opacity:  0.18 + Math.random() * 0.28,
+        size:     1.5 + Math.random() * 2.5,
+        driftX:   (Math.random() - 0.5) * 140,
+        duration: 18 + Math.random() * 14,
+        delay:    Math.random() * 24,
+        opacity:  0.08 + Math.random() * 0.14,
       })),
     [count]
   );
@@ -38,7 +38,7 @@ export function Spores({ count = 20, className = "" }: SporesProps) {
               animationDuration: `${s.duration}s`,
               animationDelay:    `${s.delay}s`,
               "--drift-x":       `${s.driftX}px`,
-              boxShadow:         "0 0 8px rgba(201,169,110,0.5)",
+              boxShadow:         "0 0 6px rgba(201,169,110,0.3)",
             } as React.CSSProperties
           }
         />

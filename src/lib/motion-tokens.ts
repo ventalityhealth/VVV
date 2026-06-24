@@ -22,8 +22,8 @@ export const duration = {
 };
 
 export const cardHover = {
-  rest:  { y: 0,  boxShadow: "0 8px 32px rgba(11,26,11,0.4)" },
-  hover: { y: -8, boxShadow: "0 24px 60px rgba(74,124,89,0.28)",
+  rest:  { y: 0,  boxShadow: "0 12px 40px -16px rgba(0,0,0,0.55)" },
+  hover: { y: -6, boxShadow: "0 28px 60px -24px rgba(0,0,0,0.7)",
            transition: { duration: duration.fast, ease: easing.cinematic } },
 };
 
