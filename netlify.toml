@@ -1,0 +1,9 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+# Next.js on Netlify requires the official runtime plugin. It wires up the
+# App Router, server components, image optimization, and serverless functions.
+# Without it Netlify would treat .next as a plain static folder and 404.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
