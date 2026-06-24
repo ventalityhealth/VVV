@@ -1,17 +1,18 @@
-// types/product.ts
 export interface SuplifulProduct {
   id: string;
-  suplifulSku: string; // Real Supliful SKU — map to your Supliful dashboard
-  name: string; // Ventality-branded name
+  suplifulSku: string;
+  name: string;
   category: string;
-  description: string; // From Supliful — verbatim
-  ingredients: string[]; // From Supliful — verbatim
-  benefits: string[]; // From Supliful — verbatim
+  description: string;
+  ingredients: string[];
+  benefits: string[];
   price: number;
   compareAtPrice?: number;
-  images: string[]; // Supliful mockups + forest overlays
-  servingSize: string; // From Supliful
-  servingsPerContainer: number; // From Supliful
-  warnings: string; // From Supliful — verbatim
-  supplementFactsImage?: string; // Supliful label image
+  images: string[];
+  servingSize: string;
+  servingsPerContainer: number;
+  warnings: string;
+  supplementFactsImage?: string;
+  /** Accent color for the product's visual identity */
+  accentColor: string;
 }

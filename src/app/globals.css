@@ -1,0 +1,159 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────
+   Design tokens — Tailwind v4 @theme block
+   ───────────────────────────────────────────── */
+@theme {
+  /* Colors */
+  --color-forest-950: #050d05;
+  --color-forest-900: #0b1a0b;
+  --color-forest-800: #142614;
+  --color-forest-700: #1e331e;
+  --color-forest-600: #2d4a2d;
+  --color-forest-500: #4a7c59;
+  --color-forest-400: #6b9e7c;
+  --color-forest-300: #8fbc9f;
+  --color-amber-gold:  #c9a96e;
+  --color-amber-light: #e8d5b5;
+  --color-amber-dark:  #8b7355;
+  --color-cream:  #f5f0e6;
+  --color-bark:   #1c1410;
+
+  /* Typography */
+  --font-heading: "Playfair Display", Georgia, serif;
+  --font-body:    "DM Sans", system-ui, sans-serif;
+  --font-accent:  "Cinzel", Georgia, serif;
+
+  /* Animations */
+  --animate-float:      float 6s ease-in-out infinite;
+  --animate-glow-pulse: glow-pulse 4s ease-in-out infinite;
+  --animate-spore:      spore-drift 20s linear infinite;
+  --animate-ping-slow:  ping-slow 2s cubic-bezier(0,0,0.2,1) infinite;
+
+  /* Shadows */
+  --shadow-glass:  inset 0 1px 1px rgba(245,240,230,0.08), 0 8px 32px rgba(11,26,11,0.4);
+  --shadow-glass-strong: 4px 4px 4px rgba(0,0,0,0.05), inset 0 1px 1px rgba(245,240,230,0.15), 0 0 60px rgba(74,124,89,0.15);
+}
+
+/* Wire next/font loaded CSS vars into design tokens.
+   :root beats :where(:root) used by @theme so these win. */
+:root {
+  --font-heading: var(--font-playfair, "Playfair Display", Georgia, serif);
+  --font-body:    var(--font-dm-sans,  "DM Sans", system-ui, sans-serif);
+  --font-accent:  var(--font-cinzel,   "Cinzel", Georgia, serif);
+}
+
+/* ─────────────────────────────────────────────
+   Keyframes
+   ───────────────────────────────────────────── */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-18px); }
+}
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.4; filter: blur(40px); }
+  50%       { opacity: 0.85; filter: blur(60px); }
+}
+@keyframes spore-drift {
+  0%        { transform: translate(0, 0) scale(1);                        opacity: 0; }
+  10%       { opacity: 1; }
+  90%       { opacity: 1; }
+  100%      { transform: translate(var(--drift-x, 0px), -100vh) scale(0.5); opacity: 0; }
+}
+@keyframes ping-slow {
+  75%, 100% { transform: scale(2); opacity: 0; }
+}
+
+/* ─────────────────────────────────────────────
+   Base
+   ───────────────────────────────────────────── */
+html {
+  background: var(--color-forest-900);
+  color: var(--color-cream);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+::selection { background: rgba(201,169,110,0.3); color: var(--color-cream); }
+
+/* Scrollbar */
+::-webkit-scrollbar       { width: 5px; }
+::-webkit-scrollbar-track { background: var(--color-forest-900); }
+::-webkit-scrollbar-thumb { background: var(--color-forest-500); border-radius: 3px; }
+
+/* ─────────────────────────────────────────────
+   Forest Glass design system
+   ───────────────────────────────────────────── */
+@layer components {
+  .forest-glass {
+    background: rgba(74,124,89,0.08);
+    backdrop-filter: blur(12px) saturate(1.2);
+    -webkit-backdrop-filter: blur(12px) saturate(1.2);
+    border: 1px solid rgba(201,169,110,0.15);
+    box-shadow: var(--shadow-glass);
+    position: relative;
+    overflow: hidden;
+  }
+  .forest-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: linear-gradient(
+      180deg,
+      rgba(201,169,110,0.45) 0%,
+      rgba(201,169,110,0.18) 25%,
+      rgba(74,124,89,0.08)   50%,
+      rgba(74,124,89,0.04)   75%,
+      rgba(201,169,110,0.25) 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .forest-glass-strong {
+    background: rgba(74,124,89,0.12);
+    backdrop-filter: blur(50px) saturate(1.4);
+    -webkit-backdrop-filter: blur(50px) saturate(1.4);
+    border: 1px solid rgba(201,169,110,0.25);
+    box-shadow: var(--shadow-glass-strong);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Nav underline-grow */
+  .nav-link {
+    position: relative;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 0;
+    height: 1px;
+    background: var(--color-amber-gold);
+    transition: width 0.28s ease;
+  }
+  .nav-link:hover::after { width: 100%; }
+}
+
+/* ─────────────────────────────────────────────
+   GSAP will-change hints
+   ───────────────────────────────────────────── */
+.gsap-target { will-change: transform, opacity; }
+
+/* Reduced-motion override */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

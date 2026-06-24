@@ -1,14 +1,16 @@
-// sections/Ingredients.tsx — "The Roots"
-import { useRef, useState } from 'react';
-import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
-import { fadeUp } from '@/lib/motion-variants';
-import { MotionTokens } from '@/lib/motion-config';
-import { Plus } from '@/components/icons';
+"use client";
+// Ingredients — "The Roots"
+// GSAP: parallax on the visual panel, text fade-in on scroll.
+// Motion for React: accordion open/close with AnimatePresence + layout.
+import { useRef, useEffect, useState } from "react";
+import { AnimatePresence, motion, LayoutGroup } from "motion/react";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { PlusIcon } from "@/components/icons";
+import { spring } from "@/lib/motion-tokens";
 
 interface Ingredient {
   name: string;
-  thumb: string;
-  // Supliful-sourced claim (placeholder — verify verbatim before launch)
+  hue: string;
   claim: string;
   detail: string;
   source: string;
@@ -17,172 +19,216 @@ interface Ingredient {
 const INGREDIENTS: Ingredient[] = [
   {
     name: "Lion's Mane Extract",
-    thumb: '#C9A96E',
-    claim: 'Supports cognitive function',
+    hue: "#C9A96E",
+    claim: "Supports cognitive function",
     detail:
-      'A functional mushroom traditionally used to support focus and mental clarity. Sourced through Supliful’s verified suppliers and third-party tested.',
-    source: 'Fruiting body extract',
+      "A functional mushroom traditionally used to support focus and mental clarity. " +
+      "Sourced through Supliful's verified suppliers and third-party tested.",
+    source: "Fruiting body extract",
   },
   {
-    name: 'KSM-66 Ashwagandha',
-    thumb: '#8FBC9F',
-    claim: 'Helps manage everyday stress',
+    name: "KSM-66 Ashwagandha",
+    hue: "#8FBC9F",
+    claim: "Helps manage everyday stress",
     detail:
-      'A full-spectrum root extract standardized for consistency, formulated to help the body adapt to everyday stress.',
-    source: 'Root extract',
+      "A full-spectrum root extract standardized for consistency, formulated to help the " +
+      "body adapt to everyday stress.",
+    source: "Root extract",
   },
   {
-    name: 'Hydrolyzed Marine Collagen',
-    thumb: '#E8D5B5',
-    claim: 'Supports skin elasticity',
+    name: "Hydrolyzed Marine Collagen",
+    hue: "#E8D5B5",
+    claim: "Supports skin elasticity",
     detail:
-      'Marine-derived collagen peptides that support skin elasticity, hair, and nails. Paired with hyaluronic acid and vitamin C.',
-    source: 'Wild-caught marine source',
+      "Marine-derived collagen peptides that support skin elasticity, hair, and nails. " +
+      "Paired with hyaluronic acid and vitamin C.",
+    source: "Wild-caught marine source",
   },
   {
-    name: 'Algal Oil DHA/EPA',
-    thumb: '#6B9E7C',
-    claim: 'Supports heart and brain health',
+    name: "Algal Oil DHA/EPA",
+    hue: "#6B9E7C",
+    claim: "Supports heart and brain health",
     detail:
-      'A plant-based omega-3 grown from algae — a vegan source of DHA and EPA that supports heart and brain health.',
-    source: 'Cultivated algae',
+      "A plant-based omega-3 grown from algae — a vegan source of DHA and EPA that " +
+      "supports heart and brain health.",
+    source: "Cultivated algae",
+  },
+  {
+    name: "Melatonin + Valerian Root",
+    hue: "#4A7C59",
+    claim: "Supports restful sleep",
+    detail:
+      "A soothing nighttime duo. Melatonin supports sleep onset; Valerian Root promotes " +
+      "relaxation. Paired with Chamomile and Magnesium Glycinate.",
+    source: "Standardized botanical extracts",
   },
 ];
 
 export function Ingredients() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
-  const sectionRef = useRef<HTMLElement>(null);
+  const sectionRef  = useRef<HTMLElement>(null);
+  const visualRef   = useRef<HTMLDivElement>(null);
+  const contentRef  = useRef<HTMLDivElement>(null);
 
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start end', 'end start'],
-  });
-  const imgY = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [MotionTokens.parallax.depth, -MotionTokens.parallax.depth]
-  );
-  const fgY = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [
-      MotionTokens.parallax.depth * MotionTokens.parallax.fgSpeed,
-      -MotionTokens.parallax.depth * MotionTokens.parallax.fgSpeed,
-    ]
-  );
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Parallax on the visual panel
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: 1.2,
+        onUpdate: (self) => {
+          const y = self.progress * 60 - 30;
+          if (visualRef.current) gsap.set(visualRef.current, { y });
+        },
+      });
+
+      // Content fade-in
+      gsap.fromTo(contentRef.current,
+        { opacity: 0, x: 30, filter: "blur(6px)" },
+        {
+          opacity: 1, x: 0, filter: "blur(0px)", duration: 0.9, ease: "power3.out",
+          scrollTrigger: { trigger: contentRef.current, start: "top 78%", once: true },
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
     <section
       id="the-roots"
       ref={sectionRef}
-      className="relative min-h-screen overflow-hidden bg-bark px-6 py-24 md:px-16 lg:px-24"
+      className="relative min-h-screen overflow-hidden bg-bark px-6 py-28 md:px-14 lg:px-24"
     >
-      <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2">
-        {/* Left — photoreal ingredient visual (parallax) */}
-        <div className="relative h-[420px] overflow-hidden rounded-[2rem] lg:h-[600px]">
-          <motion.div
-            style={{ y: imgY }}
-            className="absolute inset-[-15%] bg-[radial-gradient(circle_at_30%_30%,#2D4A2D,transparent_55%),radial-gradient(circle_at_70%_70%,#4A7C59,transparent_50%),linear-gradient(160deg,#1C1410,#0B1A0B)]"
+      {/* Ambient light */}
+      <div aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-30"
+        style={{
+          background:
+            "radial-gradient(ellipse at 20% 50%, rgba(74,124,89,0.25) 0%, transparent 55%), " +
+            "radial-gradient(ellipse at 80% 20%, rgba(201,169,110,0.15) 0%, transparent 45%)",
+        }}
+      />
+
+      <div className="relative mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2">
+
+        {/* ── Visual panel (parallax) ── */}
+        <div className="relative h-[420px] overflow-hidden rounded-[2rem] lg:h-[620px]">
+          <div
+            ref={visualRef}
+            className="absolute inset-[-15%] will-change-transform"
+            style={{
+              background:
+                "radial-gradient(circle at 30% 30%, #2D4A2D, transparent 55%), " +
+                "radial-gradient(circle at 70% 70%, #4A7C59, transparent 50%), " +
+                "linear-gradient(160deg, #1C1410, #0B1A0B)",
+            }}
           />
-          {/* moss / dew detail */}
-          <motion.div
-            style={{ y: fgY }}
-            className="absolute inset-0"
+          {/* Leaf-layers SVG composition */}
+          <svg
+            viewBox="0 0 400 500"
+            className="absolute inset-0 h-full w-full opacity-30"
             aria-hidden="true"
           >
-            <div className="absolute left-[20%] top-[30%] h-40 w-40 rounded-full bg-forest-500/30 blur-2xl" />
-            <div className="absolute right-[15%] bottom-[20%] h-52 w-52 rounded-full bg-amber-gold/20 blur-3xl" />
-          </motion.div>
-          <div className="forest-glass absolute bottom-6 left-6 rounded-full px-4 py-2 text-xs text-cream/70">
+            <ellipse cx="200" cy="250" rx="160" ry="200" fill="#4A7C59" opacity="0.2" />
+            {[
+              { x1: 120, y1: 80,  x2: 200, y2: 300, x3: 280, y3: 80  },
+              { x1: 60,  y1: 200, x2: 200, y2: 380, x3: 340, y3: 200 },
+              { x1: 150, y1: 160, x2: 200, y2: 420, x3: 250, y3: 160 },
+            ].map(({ x1, y1, x2, y2, x3, y3 }, i) => (
+              <path
+                key={i}
+                d={`M${x1} ${y1} Q${x2} ${y2} ${x3} ${y3}`}
+                fill="none"
+                stroke="#4A7C59"
+                strokeWidth="1.5"
+                opacity={0.4 - i * 0.08}
+              />
+            ))}
+            {[
+              [170, 140], [230, 190], [145, 260], [255, 310], [190, 380],
+            ].map(([cx, cy]) => (
+              <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="4" fill="#4A7C59" opacity="0.5" />
+            ))}
+          </svg>
+          <div className="forest-glass absolute bottom-5 left-5 rounded-full px-4 py-2 text-xs text-cream/65">
             Photographed · Documented · Third-party tested
           </div>
         </div>
 
-        {/* Right — content */}
-        <div>
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-          >
-            <p className="mb-4 text-sm font-body text-amber-gold/80">// The Roots</p>
-            <h2 className="font-heading italic text-4xl leading-[0.95] tracking-[-2px] text-cream md:text-5xl">
-              From forest floor to capsule.
-            </h2>
-            <p className="mt-4 max-w-md text-cream/60">
-              We don&apos;t hide behind proprietary blends. Every ingredient in
-              Ventality is traceable to Supliful&apos;s verified suppliers —
-              photographed, documented, and third-party tested.
-            </p>
-          </motion.div>
+        {/* ── Content ── */}
+        <div ref={contentRef} className="will-change-transform">
+          <p className="mb-4 text-sm font-body text-amber-gold/75 tracking-wide">// The Roots</p>
+          <h2 className="font-heading italic text-4xl leading-[0.95] tracking-[-2px] text-cream md:text-5xl">
+            From forest floor to capsule.
+          </h2>
+          <p className="mt-5 max-w-md text-cream/55 leading-relaxed">
+            We don&apos;t hide behind proprietary blends. Every ingredient in Ventality is
+            traceable to Supliful&apos;s verified suppliers — photographed, documented, and
+            third-party tested.
+          </p>
 
           {/* Accordion */}
-          <div className="mt-8 flex flex-col gap-3">
-            {INGREDIENTS.map((ing, i) => {
-              const isOpen = openIndex === i;
-              return (
-                <motion.div
-                  key={ing.name}
-                  variants={fadeUp}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, amount: 0.3 }}
-                  className="forest-glass overflow-hidden rounded-2xl"
-                >
-                  <button
-                    onClick={() => setOpenIndex(isOpen ? null : i)}
-                    className="flex w-full items-center gap-4 p-4 text-left"
-                    aria-expanded={isOpen}
+          <LayoutGroup>
+            <div className="mt-9 flex flex-col gap-3">
+              {INGREDIENTS.map((ing, i) => {
+                const isOpen = openIndex === i;
+                return (
+                  <motion.div
+                    key={ing.name}
+                    layout
+                    className="forest-glass rounded-2xl overflow-hidden"
                   >
-                    <span
-                      className="h-10 w-10 flex-shrink-0 rounded-lg"
-                      style={{
-                        background: `radial-gradient(circle at 35% 35%, ${ing.thumb}, #1C1410)`,
-                      }}
-                      aria-hidden="true"
-                    />
-                    <span className="flex-1">
-                      <span className="block font-heading italic text-lg text-cream">
-                        {ing.name}
-                      </span>
-                      <span className="block text-xs text-amber-gold/80">
-                        {ing.claim}
-                      </span>
-                    </span>
-                    <motion.span
-                      animate={{ rotate: isOpen ? 45 : 0 }}
-                      transition={{ duration: MotionTokens.duration.fast }}
-                      className="text-cream/60"
+                    <button
+                      onClick={() => setOpenIndex(isOpen ? null : i)}
+                      className="flex w-full items-center gap-4 p-4 text-left"
+                      aria-expanded={isOpen}
                     >
-                      <Plus className="h-5 w-5" />
-                    </motion.span>
-                  </button>
-                  <AnimatePresence initial={false}>
-                    {isOpen && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{
-                          duration: MotionTokens.duration.normal,
-                          ease: [...MotionTokens.ease.gentle],
+                      <span
+                        className="h-10 w-10 flex-shrink-0 rounded-xl"
+                        style={{
+                          background: `radial-gradient(circle at 35% 35%, ${ing.hue}, #1C1410)`,
                         }}
-                        className="overflow-hidden"
+                        aria-hidden="true"
+                      />
+                      <span className="flex-1 min-w-0">
+                        <span className="block font-heading italic text-lg text-cream truncate">{ing.name}</span>
+                        <span className="block text-xs text-amber-gold/75 mt-0.5">{ing.claim}</span>
+                      </span>
+                      <motion.span
+                        animate={{ rotate: isOpen ? 45 : 0 }}
+                        transition={spring.snappy}
+                        className="text-cream/50 flex-shrink-0"
                       >
-                        <div className="px-4 pb-4 pl-[4.5rem] text-sm leading-relaxed text-cream/60">
-                          {ing.detail}
-                          <span className="mt-2 block text-xs text-cream/40">
-                            Source: {ing.source}
-                          </span>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
-              );
-            })}
-          </div>
+                        <PlusIcon className="h-5 w-5" />
+                      </motion.span>
+                    </button>
+
+                    <AnimatePresence initial={false}>
+                      {isOpen && (
+                        <motion.div
+                          key="content"
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+                          className="overflow-hidden"
+                        >
+                          <div className="px-4 pb-5 pl-[4.5rem]">
+                            <p className="text-sm text-cream/60 leading-relaxed">{ing.detail}</p>
+                            <p className="mt-2 text-xs text-cream/35">Source: {ing.source}</p>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </LayoutGroup>
         </div>
       </div>
     </section>
