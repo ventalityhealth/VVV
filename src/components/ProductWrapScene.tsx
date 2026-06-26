@@ -117,11 +117,19 @@ export function ProductWrapScene({ product = "shilajit" }: { product?: string })
             <Image
               src={ASSETS.shilajit.bottleComposite}
               alt={`Ventality ${shilajit.headline}`}
-              width={440}
-              height={782}
+              width={576}
+              height={1024}
               loading="lazy"
               className="bottle-img h-auto max-h-[80vh] w-auto object-contain"
-              style={{ opacity: reduced ? 1 : 0 }}
+              style={{
+                opacity: reduced ? 1 : 0,
+                // The composite carries its own dark-stone background; fade the
+                // rectangular edges so the bottle reads as part of the scene.
+                WebkitMaskImage:
+                  "radial-gradient(ellipse 72% 76% at 50% 46%, #000 58%, transparent 88%)",
+                maskImage:
+                  "radial-gradient(ellipse 72% 76% at 50% 46%, #000 58%, transparent 88%)",
+              }}
             />
           </div>
 

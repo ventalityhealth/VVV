@@ -1,9 +1,9 @@
 /**
  * Central registry of public asset paths (per CLAUDE.md brief).
  *
- * The PNG/JPG entries currently resolve to generated PLACEHOLDERS
- * (see scripts/gen-placeholders.mjs). Drop the real Drive files in at these
- * same paths to finish — no code changes required.
+ * All entries now resolve to the real assets delivered from Drive. Note the
+ * brief flags `shilajit-bottle-*` as interim placeholders (white bottle) that
+ * will be regenerated post label-migration — swapping them needs no code change.
  */
 export const ASSETS = {
   hero: {
