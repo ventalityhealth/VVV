@@ -1,195 +1,77 @@
 @import "tailwindcss";
 
-/* ─────────────────────────────────────────────
-   Design tokens — Tailwind v4 @theme block
-
-   Direction: modern premium minimalism with natural roots.
-   The base is a clean, near-neutral editorial dark. Green (moss) and
-   gold are reserved as ACCENTS — provenance cues, not the whole theme.
-   ───────────────────────────────────────────── */
+/* ---- Design tokens (Tailwind v4 CSS-first @theme) ------------------------- */
 @theme {
-  /* Neutral ink base — the editorial canvas.
-     Faint cool-green undertone keeps a natural root without going "forest". */
-  --color-forest-950: #070908;  /* deepest */
-  --color-forest-900: #0c0f0e;  /* page background */
-  --color-forest-800: #141715;  /* panels */
-  --color-forest-700: #1c201e;  /* raised surfaces */
-  --color-forest-600: #2a302d;  /* hairlines / dividers */
+  --color-forest-900: #1e3d1a;
+  --color-forest-700: #2d5a27;
+  --color-forest-500: #3a6b33;
+  --color-forest-300: #4a8c3f;
+  --color-bark-800: #2a1d12;
+  --color-amber-700: #8a4b1e;
+  --color-amber-500: #c8843f;
+  --color-gold: #ffc46e;
+  --color-parchment: #e2d6bc;
+  --color-ink: #0a0a0a;
 
-  /* Moss — the green accent (provenance, never the field) */
-  --color-forest-500: #4a7c59;
-  --color-forest-400: #6b9e7c;
-  --color-forest-300: #8fbc9f;
-
-  /* Gold — the premium accent */
-  --color-amber-gold:  #c9a96e;
-  --color-amber-light: #e8d5b5;
-  --color-amber-dark:  #8b7355;
-
-  /* Paper / warm dark */
-  --color-cream:  #f3efe7;
-  --color-bark:   #14120f;
-
-  /* Typography */
-  --font-heading: "Playfair Display", Georgia, serif;
-  --font-body:    "DM Sans", system-ui, sans-serif;
-  --font-accent:  "Cinzel", Georgia, serif;
-
-  /* Animations (kept restrained) */
-  --animate-float:      float 7s ease-in-out infinite;
-  --animate-glow-pulse: glow-pulse 6s ease-in-out infinite;
-  --animate-spore:      spore-drift 22s linear infinite;
-  --animate-ping-slow:  ping-slow 2.4s cubic-bezier(0,0,0.2,1) infinite;
-
-  /* Shadows — soft depth, no colored glow */
-  --shadow-soft:   0 12px 40px -16px rgba(0,0,0,0.55);
-  --shadow-raised: 0 24px 60px -24px rgba(0,0,0,0.7);
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
-/* Wire next/font loaded CSS vars into design tokens.
-   :root beats :where(:root) used by @theme so these win. */
+/* ---- Base ----------------------------------------------------------------- */
 :root {
-  --font-heading: var(--font-playfair, "Playfair Display", Georgia, serif);
-  --font-body:    var(--font-dm-sans,  "DM Sans", system-ui, sans-serif);
-  --font-accent:  var(--font-cinzel,   "Cinzel", Georgia, serif);
-
-  /* Hairline color reused by utilities */
-  --line: rgba(243, 239, 231, 0.10);
+  color-scheme: dark;
 }
 
-/* ─────────────────────────────────────────────
-   Keyframes
-   ───────────────────────────────────────────── */
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-10px); }
+html {
+  background-color: var(--color-ink);
+}
+
+body {
+  background-color: var(--color-ink);
+  color: var(--color-parchment);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ---- Atmospheric overlays ------------------------------------------------- */
+.mist-drift {
+  animation: mist-drift 26s ease-in-out infinite alternate;
+  will-change: transform, opacity;
+}
+@keyframes mist-drift {
+  0% {
+    transform: translate3d(-3%, 0, 0) scale(1.05);
+    opacity: 0.55;
+  }
+  100% {
+    transform: translate3d(3%, -2%, 0) scale(1.12);
+    opacity: 0.8;
+  }
+}
+
+.glow-pulse {
+  animation: glow-pulse 8s ease-in-out infinite alternate;
 }
 @keyframes glow-pulse {
-  0%, 100% { opacity: 0.25; }
-  50%       { opacity: 0.5; }
-}
-@keyframes spore-drift {
-  0%        { transform: translate(0, 0) scale(1);                        opacity: 0; }
-  12%       { opacity: 1; }
-  88%       { opacity: 1; }
-  100%      { transform: translate(var(--drift-x, 0px), -100vh) scale(0.5); opacity: 0; }
-}
-@keyframes ping-slow {
-  75%, 100% { transform: scale(2); opacity: 0; }
+  0% { opacity: 0.25; }
+  100% { opacity: 0.55; }
 }
 
-/* ─────────────────────────────────────────────
-   Base
-   ───────────────────────────────────────────── */
-html {
-  background: var(--color-forest-900);
-  color: var(--color-cream);
-  font-family: var(--font-body);
-  overflow-x: hidden;
-  scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+/* ---- Scroll cue ----------------------------------------------------------- */
+.scroll-cue {
+  animation: scroll-cue 2.2s ease-in-out infinite;
+}
+@keyframes scroll-cue {
+  0%, 100% { transform: translateY(0); opacity: 0.4; }
+  50% { transform: translateY(8px); opacity: 0.9; }
 }
 
-*, *::before, *::after { box-sizing: border-box; }
-
-::selection { background: rgba(201,169,110,0.25); color: var(--color-cream); }
-
-/* Scrollbar */
-::-webkit-scrollbar       { width: 5px; }
-::-webkit-scrollbar-track { background: var(--color-forest-950); }
-::-webkit-scrollbar-thumb { background: var(--color-forest-600); border-radius: 3px; }
-
-/* ─────────────────────────────────────────────
-   Surfaces & components — clean editorial glass
-   (class names kept as .forest-glass for continuity, restyled neutral)
-   ───────────────────────────────────────────── */
-@layer components {
-  /* Quiet hairline surface — the default card */
-  .forest-glass {
-    background: rgba(243, 239, 231, 0.025);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid var(--line);
-    box-shadow: var(--shadow-soft);
-  }
-
-  /* Slightly more present surface — large panels, drawers */
-  .forest-glass-strong {
-    background: rgba(243, 239, 231, 0.05);
-    backdrop-filter: blur(18px) saturate(1.1);
-    -webkit-backdrop-filter: blur(18px) saturate(1.1);
-    border: 1px solid rgba(243, 239, 231, 0.14);
-    box-shadow: var(--shadow-raised);
-  }
-
-  /* Premium primary button — solid paper on ink, high contrast */
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: var(--color-cream);
-    color: var(--color-forest-950);
-    font-weight: 500;
-    border: 1px solid transparent;
-    transition: background 0.25s ease, transform 0.2s ease;
-  }
-  .btn-primary:hover { background: #fffdf8; }
-
-  /* Secondary button — ghost with hairline */
-  .btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: transparent;
-    color: var(--color-cream);
-    border: 1px solid rgba(243, 239, 231, 0.18);
-    transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease;
-  }
-  .btn-secondary:hover {
-    border-color: rgba(201,169,110,0.6);
-    color: var(--color-amber-gold);
-    background: rgba(243, 239, 231, 0.02);
-  }
-
-  /* Editorial eyebrow label */
-  .eyebrow {
-    font-family: var(--font-body);
-    text-transform: uppercase;
-    letter-spacing: 0.24em;
-    font-size: 0.7rem;
-    font-weight: 500;
-    color: rgba(201, 169, 110, 0.85);
-  }
-
-  /* Nav underline-grow */
-  .nav-link { position: relative; }
-  .nav-link::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -3px;
-    width: 0;
-    height: 1px;
-    background: var(--color-amber-gold);
-    transition: width 0.28s ease;
-  }
-  .nav-link:hover::after { width: 100%; }
-
-  /* Thin rule used to separate editorial blocks */
-  .hairline { border-color: var(--line); }
-}
-
-/* ─────────────────────────────────────────────
-   GSAP will-change hints
-   ───────────────────────────────────────────── */
-.gsap-target { will-change: transform, opacity; }
-
-/* Reduced-motion override */
+/* Honour reduced-motion at the CSS layer too. */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
+  .mist-drift,
+  .glow-pulse,
+  .scroll-cue {
+    animation: none;
   }
 }

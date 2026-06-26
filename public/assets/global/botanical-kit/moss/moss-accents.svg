@@ -1,0 +1,21 @@
+<svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Moss accent clusters — scattered organic shapes for foreground layering -->
+  
+  <!-- Moss patch 1: large cluster, bottom-left -->
+  <ellipse cx="60" cy="160" rx="45" ry="18" fill="#2d5a27" opacity="0.85"/>
+  <ellipse cx="45" cy="150" rx="25" ry="12" fill="#3a6b33" opacity="0.9"/>
+  <ellipse cx="80" cy="155" rx="20" ry="10" fill="#1e3d1a" opacity="0.8"/>
+  
+  <!-- Moss patch 2: right-side accent -->
+  <ellipse cx="320" cy="140" rx="35" ry="14" fill="#2d5a27" opacity="0.85"/>
+  <ellipse cx="340" cy="135" rx="22" ry="10" fill="#3a6b33" opacity="0.9"/>
+  
+  <!-- Moss patch 3: small scattered, center -->
+  <ellipse cx="180" cy="170" rx="18" ry="8" fill="#2d5a27" opacity="0.75"/>
+  <ellipse cx="200" cy="175" rx="15" ry="7" fill="#3a6b33" opacity="0.8"/>
+  <ellipse cx="220" cy="168" rx="12" ry="6" fill="#1e3d1a" opacity="0.7"/>
+  
+  <!-- Moss patch 4: top accent -->
+  <ellipse cx="150" cy="30" rx="28" ry="11" fill="#2d5a27" opacity="0.7"/>
+  <ellipse cx="170" cy="35" rx="18" ry="8" fill="#3a6b33" opacity="0.8"/>
+</svg>

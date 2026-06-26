@@ -1,0 +1,44 @@
+<svg viewBox="0 0 800 1200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Primary scroll vine — animated with GSAP stroke-dasharray/dashoffset -->
+  <path id="vine-main"
+    d="M 400 0 
+       C 420 80, 380 160, 350 240 
+       S 400 380, 450 460 
+       S 370 580, 320 660 
+       S 420 800, 460 880 
+       S 390 1000, 360 1100 
+       S 420 1180, 400 1200"
+    fill="none"
+    stroke="#2d5a27"
+    stroke-width="6"
+    stroke-linecap="round"
+    stroke-dasharray="2000"
+    stroke-dashoffset="2000"
+    data-gsap="vine-main"/>
+  
+  <!-- Thinner companion branch -->
+  <path id="vine-branch-1"
+    d="M 450 460 
+       C 520 500, 580 540, 620 600 
+       S 660 700, 640 760"
+    fill="none"
+    stroke="#3a6b33"
+    stroke-width="3"
+    stroke-linecap="round"
+    stroke-dasharray="600"
+    stroke-dashoffset="600"
+    data-gsap="vine-branch-1"/>
+  
+  <!-- Secondary offshoot -->
+  <path id="vine-branch-2"
+    d="M 320 660 
+       C 260 700, 200 740, 180 800 
+       S 170 880, 190 920"
+    fill="none"
+    stroke="#3a6b33"
+    stroke-width="3"
+    stroke-linecap="round"
+    stroke-dasharray="500"
+    stroke-dashoffset="500"
+    data-gsap="vine-branch-2"/>
+</svg>

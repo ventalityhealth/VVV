@@ -1,21 +1,15 @@
-import { Navigation } from "@/components/Navigation";
-import { Hero } from "@/sections/Hero";
-import { Products } from "@/sections/Products";
-import { Ingredients } from "@/sections/Ingredients";
-import { ForestExperience } from "@/sections/ForestExperience";
-import { Footer } from "@/sections/Footer";
+import { HeroLogScene } from "@/components/HeroLogScene";
+import { BranchTravelScene } from "@/components/BranchTravelScene";
+import { ProductWrapScene } from "@/components/ProductWrapScene";
 
-export default function Page() {
+export default function HomePage() {
   return (
-    <>
-      <Navigation />
-      <main>
-        <Hero />
-        <Products />
-        <Ingredients />
-        <ForestExperience />
-      </main>
-      <Footer />
-    </>
+    <main className="bg-ink">
+      <HeroLogScene />
+      <BranchTravelScene />
+      <section id="shilajit">
+        <ProductWrapScene product="shilajit" />
+      </section>
+    </main>
   );
 }
